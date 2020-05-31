@@ -1,10 +1,24 @@
 package problem;
 
 import algorithm.UnionFind;
+import java.util.LinkedList;
+import java.util.List;
+
+class Pair<U, V> {
+    public U first;
+    public V second;
+
+    public Pair(U first, V second) {
+        this.first = first;
+        this.second = second;
+    }
+}
 
 class SurrendedRegions {
-    static final char O = 'O';
-    static final char X = 'X';
+    private static final char O = 'O';
+    private static final char X = 'X';
+    private int rows;
+    private int cols;
 
     public void solve(char[][] board) {
         if (board.length == 0)
@@ -39,7 +53,7 @@ class SurrendedRegions {
                 if (board[i][j] == O)
                     for (int k = 0; k < 4; k++) {
                         int x = i + d[k][0];
-                        int y = i + d[k][1];
+                        int y = j + d[k][1];
 
                         if (board[x][y] == O)
                             uf.union(x * n + y, i * n + j);
@@ -52,5 +66,75 @@ class SurrendedRegions {
                 if (!uf.connected(i * n + j, dummy))
                     board[i][j] = X;
 
+    }
+
+    // Solve use DFS/BFS
+    public void solve2(char[][] board) {
+        if (board == null || board.length == 0)
+            return;
+        rows = board.length;
+        cols = board[0].length;
+
+        List<Pair<Integer, Integer>> borders = new LinkedList<Pair<Integer, Integer>>();
+        // Construct list of border cells
+        for (int r = 0; r < rows; r++) {
+            borders.add(new Pair(r, 0));
+            borders.add(new Pair(r, cols - 1));
+        }
+        for (int c = 0; c < cols; c++) {
+            borders.add(new Pair(0, c));
+            borders.add(new Pair(rows - 1, c));
+        }
+        // Step 2
+        for (Pair<Integer, Integer> pair : borders)
+            DFS(board, pair.first, pair.second);
+        // Step 3
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (board[r][c] == 'O')
+                    board[r][c] = 'X';
+                if (board[r][c] == 'E')
+                    board[r][c] = 'O';
+            }
+        }
+    }
+
+    private void DFS(char[][] board, int row, int col) {
+        if (row < 0 || row >= rows || col < 0 || col >= cols)
+            return;
+
+        if (board[row][col] != 'O')
+            return;
+
+        board[row][col] = 'E';
+        int[][] d = new int[][] { { 1, 0 }, { 0, 1 }, { 0, -1 }, { -1, 0 } };
+
+        for (int k = 0; k < 4; k++) {
+            int x = row + d[k][0];
+            int y = col + d[k][1];
+
+            DFS(board, x, y);
+        }
+    }
+
+    private void BFS(char[][] board, int r, int c) {
+        LinkedList<Pair<Integer, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair<>(r, c));
+        while (!queue.isEmpty()) {
+            Pair<Integer, Integer> p = queue.pollFirst();
+            int row = p.first, col = p.second;
+            if (board[row][col] != 'O')
+                continue;
+            board[row][col] = 'E';
+
+            if (col < cols - 1)
+                queue.offer(new Pair<>(row, col + 1));
+            if (col > 0)
+                queue.offer(new Pair<>(row, col - 1));
+            if (row < rows - 1)
+                queue.offer(new Pair<>(row + 1, col));
+            if (row > 0)
+                queue.offer(new Pair<>(row - 1, col));
+        }
     }
 }
