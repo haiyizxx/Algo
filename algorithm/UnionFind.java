@@ -1,13 +1,13 @@
 package algorithm;
 
-class UF {
+public class UnionFind {
     private int count;
     // Parent of each node
     private int[] parent;
     // Size of each node
     private int[] size;
 
-    public UF(int n) {
+    public UnionFind(int n) {
         count = n;
         size = new int[n];
         parent = new int[n];
