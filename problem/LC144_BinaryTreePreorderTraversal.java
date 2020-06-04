@@ -46,7 +46,7 @@ public class LC144_BinaryTreePreorderTraversal {
      * Space complexity: depending on the tree structure, we could keep up to the entire tree,
      * therefore, the space complexity is O(N).
      */
-    public static List<Integer> iterationBFS(TreeNode root) {
+    public static List<Integer> iterationDFSPreorder(TreeNode root) {
         LinkedList<TreeNode> stack = new LinkedList<>();
         List<Integer> res = new LinkedList<>();
 
