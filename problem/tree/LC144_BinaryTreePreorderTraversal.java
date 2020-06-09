@@ -1,7 +1,6 @@
-package problem;
+package problem.tree;
 
 import algorithm.TreeNode;
-import apple.laf.JRSUIUtils.Tree;
 import java.util.LinkedList;
 import java.util.List;
 
