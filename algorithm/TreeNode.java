@@ -28,6 +28,8 @@ public class TreeNode {
     // Inorder(left, root, right): 4 2 5 1 3
     // Postorder(left, right, root) 4 5 2 3 1
 
+    // For itertion
+    // If use stack for preorder, push right node first, then left.
     public static void preorder(TreeNode root) {
         if (root == null)
             return;
