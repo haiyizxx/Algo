@@ -36,7 +36,7 @@ class Solution:
         res = []
         for i in range(n):
             if (i and nums[i-1] == nums[i]):
-                pass
+                continue
 
             j = i + 1
             k = n - 1
