@@ -11,38 +11,39 @@ class Solution:
             return [-1, -1]
         return [self.find_left(nums, target), self.find_right(nums, target)]
 
+    # Left range binary search
     def find_left(self, nums, target):
         left, right = 0, len(nums)-1
 
-        while left + 1 < right:
+        while left <= right:
             mid = left + (right - left) // 2
             if nums[mid] >= target:
-                right = mid
+                #[left, mid-1]
+                right = mid-1
             else:
-                left = mid
+                #[mid+1, right]
+                left = mid+1
 
-        print('left return')
-        if nums[left] == target:
-            return left
-        elif nums[right] == target:
-            return right
+        if left >= len(nums) or nums[left] != target:
+            return -1
+        return left
 
-        return -1
-
+    # Right range binary search
     def find_right(self, nums, target):
         left, right = 0, len(nums)-1
 
-        while left + 1 < right:
+        while left <= right:
             mid = left + (right - left) // 2
             if nums[mid] <= target:
-                left = mid
+                #[mid+1, right]
+                # Move from left to right, shrink the range towards right
+                left = mid + 1
             else:
-                right = mid
+                #[left, mid-1]
+                right = mid - 1
 
-        if nums[right] == target:
-            return right
-        elif nums[left] == target:
-            return left
-        return -1
+        if right < 0 or nums[right] != target:
+            return -1
+        return right
 
 # @lc code=end

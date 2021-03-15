@@ -6,6 +6,20 @@
 
 # @lc code=start
 class Solution:
+    # e.g.
+    # 0 1 2 4 5 6 7
+    # 4 5 6 7 0 1 2
+    #  upper half
+    #    /     |
+    #   /      |
+    #  /       |
+    # ----------------
+    #          |      /
+    #          |     /
+    #          |    /  lower half
+
+    # if mid in upper half, mid > left
+    # if mid in lower hal, mid < left
     def search(self, nums: List[int], target: int) -> int:
         if not nums:
             return -1
@@ -17,6 +31,7 @@ class Solution:
             mid = left + (right - left) // 2
             if nums[mid] == target:
                 return mid
+            # mid in upper half
             if nums[left] <= nums[mid]:
                 if nums[left] <= target and target <= nums[mid]:
                     right = mid

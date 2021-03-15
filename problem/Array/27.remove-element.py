@@ -30,5 +30,5 @@ class Solution:
                 n -= 1
             else:
                 i += 1
-
+        return i
 # @lc code=end

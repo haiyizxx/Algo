@@ -12,9 +12,11 @@ class Solution:
         c = Counter(nums)
         res = []
         for i in range(n):
+            # only use first occurrance for the same position
             if i and nums[i] == nums[i-1]:
                 continue
             for j in range(i+1, n):
+                # Only use duplicate for first occurrance j-1 ==i
                 if (j-1 != i and nums[j] == nums[j-1]):
                     continue
 
@@ -37,7 +39,9 @@ class Solution:
         for i in range(n):
             if (i and nums[i-1] == nums[i]):
                 continue
-
+            # Want to find nums[i] + nums[j] + nums[k] == 0
+            # let t = 0 - nums[i]
+            # nums[j] + nums[k] > t -> too large, decrease k
             j = i + 1
             k = n - 1
 
